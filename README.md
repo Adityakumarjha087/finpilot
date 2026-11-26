@@ -129,6 +129,15 @@ E2E_BASE_URL=http://localhost:20800 npm run test:e2e   # against the running com
 | Forecast | empirical coverage of 80 % interval | 78.5 % |
 | Anomaly detection | precision / recall / F1 on 93 injected anomalies (unseen seeds) | 0.84 / 0.98 / 0.91 |
 
+## Test results (last local run)
+
+| Suite | Result |
+|---|---|
+| Backend (JUnit 5 + Testcontainers Postgres 16 / Redis 7) | 151 tests (30 integration), 0 failures, JaCoCo line coverage 95.9 %, branch 80.5 % |
+| ML service (pytest, ruff, mypy --strict) | 21 tests, 81 % coverage, lint and type-check clean |
+| Frontend (Vitest + Testing Library, eslint, tsc) | 74 tests, 77 % line coverage, production build OK |
+| End to end | `scripts/smoke.sh` and Playwright (`e2e/finpilot.spec.ts`) pass against `docker compose up` |
+
 ## Deployment guide
 
 * **Any Docker host / VM:** copy the repo, run `./infra/gen-env.sh` (or provide real secrets through your

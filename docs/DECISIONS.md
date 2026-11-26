@@ -17,7 +17,8 @@
 3. Execution uses a **separate login role** (`finpilot_readonly`) that has `SELECT` only on the three views,
    `default_transaction_read_only=on` and `statement_timeout=3s`, inside a `READ ONLY` transaction.
 4. The views filter on `current_setting('finpilot.user_id')`, bound by the backend with
-   `set_config(..., true)` (transaction-local). Even a query with no `WHERE` clause sees only the caller's rows.
+   `SET LOCAL` (transaction-local). Even a query with no `WHERE` clause sees only the caller's rows. Migration V4
+   revokes `set_config()` from `PUBLIC`, so a query running as the read-only role cannot re-bind the user id.
    Integration tests prove the role cannot read base tables, cannot write, and that users are isolated.
 
 ## Offline-first AI

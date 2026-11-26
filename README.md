@@ -54,7 +54,28 @@ transaction with `finpilot.user_id` bound -> chart suggestion + summary.
 
 ## Screenshots
 
-_Placeholders: add `docs/screenshots/dashboard.png`, `import.png`, `ask.png`, `forecast.png`._
+Captured from the running Docker stack with synthetic demo data (`node scripts/screenshots.mjs`).
+
+![Dashboard](docs/screenshots/dashboard.png)
+*Dashboard: monthly KPIs, budget-alert banner, income vs expenses and spending by category.*
+
+![Natural-language assistant](docs/screenshots/assistant.png)
+*Ask: a plain-English question answered with validated, read-only SQL, a chart and the result table.*
+
+![Forecast](docs/screenshots/forecast.png)
+*Forecast: 12 months of history plus a 3-month ETS forecast with a shaded 80 % confidence band.*
+
+![Anomalies](docs/screenshots/anomalies.png)
+*Anomalies: Isolation Forest flags, each with plain-English reasons.*
+
+![Budgets](docs/screenshots/budgets.png)
+*Budgets: progress bars that turn amber at 80 % and red at 100 %.*
+
+![CSV import column mapping](docs/screenshots/import-mapping.png)
+*Import: auto-suggested column mapping (debit/credit columns, dd/MM/yyyy dates) for a bank CSV export.*
+
+![Dashboard in dark mode](docs/screenshots/dashboard-dark.png)
+*Dark mode.*
 
 ## Local setup
 

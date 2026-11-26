@@ -30,7 +30,7 @@ public class MlClient {
     public MlClient(RestClient.Builder builder, AppProperties props) {
         Duration timeout = props.ml().timeout();
         JdkClientHttpRequestFactory factory = new JdkClientHttpRequestFactory(
-                HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(3)).build());
+                HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1).connectTimeout(Duration.ofSeconds(3)).build());
         factory.setReadTimeout(timeout);
         this.http = builder.clone()
                 .baseUrl(props.ml().baseUrl())

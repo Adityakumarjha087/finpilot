@@ -38,8 +38,8 @@ echo "7. dashboard / forecast / anomalies / recurring"
 curl -fsS -H "$AUTH" "$BASE/api/v1/dashboard" | jq_py '"income=%.0f expense=%.0f txns=%d flagged=%d" % (d["totals"]["income"], d["totals"]["expense"], d["transactionCount"], d["flaggedAnomalies"])'
 curl -fsS -H "$AUTH" "$BASE/api/v1/forecast" | jq_py '"forecast categories=%d next-month total=%.0f [%.0f..%.0f]" % (len(d["categories"]), d["total"]["forecast"][0]["mean"], d["total"]["forecast"][0]["lower"], d["total"]["forecast"][0]["upper"])'
 curl -fsS -H "$AUTH" -X POST "$BASE/api/v1/anomalies/scan" | jq_py '"anomaly scan: %s" % d'
-curl -fsS -H "$AUTH" "$BASE/api/v1/anomalies" | jq_py '"top anomaly: %s" % ((d[0]["merchant"], d[0]["amount"], d[0]["anomaly"]["reasons"]) if d else None)'
-curl -fsS -H "$AUTH" "$BASE/api/v1/recurring" | jq_py '"recurring: %s" % [(r["merchant"], r["cadence"], r["averageAmount"]) for r in d[:5]]'
+curl -fsS -H "$AUTH" "$BASE/api/v1/anomalies" | jq_py '"top anomaly: %r" % ((d[0]["merchant"], d[0]["amount"], d[0]["anomaly"]["reasons"]),) if d else "none"'
+curl -fsS -H "$AUTH" "$BASE/api/v1/recurring" | jq_py '"recurring: %r" % ([(r["merchant"], r["cadence"], r["averageAmount"]) for r in d[:5]],)'
 GOAL=$(curl -fsS -H "$AUTH" "$BASE/api/v1/goals" | jq_py 'd[0]["id"]')
 curl -fsS -H "$AUTH" "$BASE/api/v1/goals/$GOAL/suggestion" | jq_py '"goal advice: " + d["advice"]'
 echo "SMOKE OK"

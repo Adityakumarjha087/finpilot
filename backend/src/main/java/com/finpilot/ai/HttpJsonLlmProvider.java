@@ -14,7 +14,7 @@ abstract class HttpJsonLlmProvider implements LlmProvider {
 
     protected HttpJsonLlmProvider(RestClient.Builder builder, String baseUrl, String model, Duration timeout) {
         JdkClientHttpRequestFactory factory = new JdkClientHttpRequestFactory(
-                HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(5)).build());
+                HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1).connectTimeout(Duration.ofSeconds(5)).build());
         factory.setReadTimeout(timeout);
         this.http = configure(builder.clone().baseUrl(baseUrl).requestFactory(factory)).build();
         this.model = model;

@@ -55,7 +55,8 @@ class LlmProvidersTest {
         assertThat(p.complete(REQ)).isEqualTo("SELECT 1 FROM nl_goals");
         RecordedRequest r = server.takeRequest();
         assertThat(r.getPath()).isEqualTo("/v1/messages");
-        assertThat(r.getHeaders().toString()).contains("sk-test");
+        String credential = r.getHeader("x-api-key") != null ? r.getHeader("x-api-key") : r.getHeader("Authorization");
+        assertThat(credential).contains("sk-test");
         JsonNode body = json.readTree(r.getBody().readUtf8());
         assertThat(body.path("model").asText()).isEqualTo("claude-opus-5-5");
         assertThat(body.path("max_tokens").asInt()).isEqualTo(100);

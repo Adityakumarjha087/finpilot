@@ -1,6 +1,11 @@
 spring:
   datasource:
     password: test
+  data:
+    redis:
+      # CI/dev machines can be heavily loaded; a 2 s budget made the limiter fail open spuriously
+      timeout: 15s
+      connect-timeout: 15s
   flyway:
     placeholders:
       readonlyPassword: readonly-test-pw

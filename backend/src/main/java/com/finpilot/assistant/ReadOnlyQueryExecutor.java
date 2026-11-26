@@ -13,8 +13,8 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 /**
  * Runs validated SQL on the restricted read-only pool inside a READ ONLY transaction, after binding the
- * caller's id with {@code set_config('finpilot.user_id', ?, true)} (transaction-local) so the nl_* views
- * only expose that user's rows.
+ * caller's id with {@code SET LOCAL finpilot.user_id} (transaction-local) so the nl_* views
+ * only expose that user's rows. The role cannot call set_config() to re-bind it from inside a query.
  */
 @Component
 public class ReadOnlyQueryExecutor {
@@ -32,8 +32,9 @@ public class ReadOnlyQueryExecutor {
     public QueryResult run(long userId, String sql) {
         try {
             return tx.execute(status -> {
-                jdbc.queryForObject("SELECT set_config('finpilot.user_id', ?, true)", String.class,
-                        Long.toString(userId));
+                // SET LOCAL (not set_config) because EXECUTE on set_config is revoked from the read-only role;
+                // userId is a long, so inlining it cannot inject.
+                jdbc.execute("SET LOCAL finpilot.user_id = '" + userId + "'");
                 return jdbc.query(sql, rs -> {
                     ResultSetMetaData md = rs.getMetaData();
                     List<String> cols = new ArrayList<>();

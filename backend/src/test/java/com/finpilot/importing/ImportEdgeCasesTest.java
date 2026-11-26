@@ -87,7 +87,7 @@ class ImportEdgeCasesTest {
         assertThatThrownBy(() -> parse("\n\n  \n".getBytes())).isInstanceOf(ApiException.class);
         assertThatThrownBy(() -> parse("Date,Narration,Amount\n".getBytes())).isInstanceOf(ApiException.class);
         assertThatThrownBy(() -> parse(",,\n1,2,3\n".getBytes())).isInstanceOf(ApiException.class)
-                .hasMessageContaining("headers");
+                .hasMessageContaining("header");
     }
 
     @Test

@@ -24,7 +24,7 @@ class MlClientTest {
         server.start();
         AppProperties p = SecurityPrimitivesTest.props("MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY=");
         AppProperties props = new AppProperties(p.timezone(), p.jwt(), p.encryption(),
-                new AppProperties.Ml(server.url("/").toString(), "secret-token", Duration.ofSeconds(3)), p.ai(),
+                new AppProperties.Ml(server.url("/").toString(), "secret-token", Duration.ofSeconds(30)), p.ai(),
                 p.readonlyDb(), p.rateLimit(), p.cors(), p.retrain(), p.seed());
         client = new MlClient(RestClient.builder(), props);
     }

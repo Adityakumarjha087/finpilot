@@ -1,0 +1,112 @@
+spring:
+  application:
+    name: finpilot-backend
+  threads:
+    virtual:
+      enabled: true
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:20810/finpilot}
+    username: ${DB_USER:finpilot}
+    password: ${DB_PASSWORD}
+    hikari:
+      maximum-pool-size: 10
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+          batch_size: 200
+        order_inserts: true
+  flyway:
+    placeholders:
+      readonlyUser: ${DB_READONLY_USER:finpilot_readonly}
+      readonlyPassword: ${DB_READONLY_PASSWORD}
+      appTimezone: ${APP_TIMEZONE:Asia/Kolkata}
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:20811}
+      timeout: 2s
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 6MB
+  jackson:
+    default-property-inclusion: always
+    serialization:
+      write-dates-as-timestamps: false
+
+server:
+  port: ${SERVER_PORT:8080}
+  error:
+    include-stacktrace: never
+    include-message: never
+  shutdown: graceful
+  forward-headers-strategy: framework
+
+logging:
+  structured:
+    format:
+      console: ${LOG_FORMAT:ecs}
+  level:
+    root: INFO
+    com.finpilot: ${LOG_LEVEL:INFO}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: never
+  health:
+    redis:
+      enabled: true
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: alpha
+
+finpilot:
+  timezone: ${APP_TIMEZONE:Asia/Kolkata}
+  jwt:
+    secret: ${JWT_SECRET}
+    issuer: finpilot
+    access-ttl: ${JWT_ACCESS_TTL:PT15M}
+    refresh-ttl: ${JWT_REFRESH_TTL:P14D}
+  encryption:
+    key: ${FINPILOT_ENCRYPTION_KEY}
+  ml:
+    base-url: ${ML_BASE_URL:http://localhost:20802}
+    token: ${ML_SERVICE_TOKEN}
+    timeout: ${ML_TIMEOUT:PT20S}
+  ai:
+    provider: ${LLM_PROVIDER:fake}
+    model: ${LLM_MODEL:}
+    api-key: ${LLM_API_KEY:}
+    base-url: ${LLM_BASE_URL:}
+    timeout: ${LLM_TIMEOUT:PT30S}
+  readonly-db:
+    url: ${DB_READONLY_URL:${DB_URL:jdbc:postgresql://localhost:20810/finpilot}}
+    username: ${DB_READONLY_USER:finpilot_readonly}
+    password: ${DB_READONLY_PASSWORD}
+  rate-limit:
+    backend: ${RATE_LIMIT_BACKEND:redis}
+    login-per-minute: ${RATE_LIMIT_LOGIN:5}
+    api-per-minute: ${RATE_LIMIT_API:300}
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:20800,http://localhost:5173}
+  retrain:
+    min-corrections: ${RETRAIN_MIN_CORRECTIONS:5}
+    cron: ${RETRAIN_CRON:0 */15 * * * *}
+  seed:
+    enabled: ${SEED_DEMO_DATA:false}

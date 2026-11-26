@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    password: test
+  flyway:
+    placeholders:
+      readonlyPassword: readonly-test-pw
+logging:
+  structured:
+    format:
+      console: ""
+  level:
+    root: WARN
+    com.finpilot: INFO
+finpilot:
+  jwt:
+    secret: test-secret-test-secret-test-secret-0123456789
+  encryption:
+    key: MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY=
+  ml:
+    token: test-token
+    base-url: http://localhost:1
+  readonly-db:
+    password: readonly-test-pw
+  rate-limit:
+    backend: redis
+    login-per-minute: 5
+    api-per-minute: 1000
+  retrain:
+    cron: "-"

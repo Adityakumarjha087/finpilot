@@ -1,0 +1,26 @@
+# general
+.env
+.DS_Store
+*.log
+# python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+ml/models/
+# java
+backend/target/
+*.class
+# node
+node_modules/
+frontend/dist/
+frontend/coverage/
+frontend/test-results/
+frontend/playwright-report/
+e2e/test-results/
+e2e/playwright-report/

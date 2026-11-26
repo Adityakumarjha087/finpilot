@@ -1,0 +1,36 @@
+{
+  "categorisation": {
+    "model": "TF-IDF (char 2-5 + word 1-2) + LogisticRegression",
+    "seen_merchants": {
+      "accuracy": 0.9894,
+      "macro_f1": 0.9901,
+      "n_test": 1700
+    },
+    "unseen_merchants": {
+      "accuracy": 0.5441,
+      "macro_f1": 0.481,
+      "n_test": 340
+    },
+    "active_learning": {
+      "corrections_added": 34,
+      "unseen_accuracy_before": 0.5441,
+      "unseen_accuracy_after": 0.9441
+    },
+    "predict_latency_ms_per_1000": 28.9
+  },
+  "forecasting": {
+    "model": "statsmodels ETS (additive error, damped additive trend)",
+    "backtest": "18-month synthetic histories, 3-month holdout, per category",
+    "mape_model": 0.2095,
+    "mape_naive_baseline": 0.205,
+    "interval_80_coverage": 0.7848,
+    "n_forecasts": 474
+  },
+  "anomaly_detection": {
+    "model": "IsolationForest (log amount, category z, merchant freq, hour deviation) + rules",
+    "precision": 0.8426,
+    "recall": 0.9785,
+    "f1": 0.9055,
+    "injected_anomalies": 93
+  }
+}

@@ -9,6 +9,18 @@ agent** that shows the generated SQL and charts the result.
 All data in this repository is **synthetic**. No API key is needed: the default LLM provider is an offline,
 deterministic engine, and real providers (Anthropic Claude, OpenAI, Gemini, Ollama) are one env var away.
 
+## Live demo
+
+| | |
+|---|---|
+| **App** | [finpilot-chi-cyan.vercel.app](https://finpilot-chi-cyan.vercel.app) |
+| **API docs** | [finpilot-api-5052.onrender.com/swagger-ui.html](https://finpilot-api-5052.onrender.com/swagger-ui.html) |
+| **Health** | [finpilot-api-5052.onrender.com/actuator/health](https://finpilot-api-5052.onrender.com/actuator/health) |
+| **Demo login** | `demo@finpilot.dev` / `DemoPass123!` (admin: `admin@finpilot.dev` / `AdminPass123!`) |
+
+> Hosted on free tiers (Vercel + Render + Neon Postgres). The backend sleeps after 15 minutes idle, so the
+> first request can take about a minute — open the health link first. Demo limits: offline NL→SQL provider; the ML forecasting service runs as a separate free instance.
+
 ## Features
 
 | # | Feature | Where |

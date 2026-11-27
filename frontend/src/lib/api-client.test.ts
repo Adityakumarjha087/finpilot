@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { ApiError, apiRequest, buildQuery, refreshSession, setUnauthorizedHandler } from "./api-client";
+import { ApiError, apiBase, apiRequest, buildQuery, refreshSession, setUnauthorizedHandler } from "./api-client";
 import { tokens } from "./tokens";
 import { jsonResponse } from "@/test/utils";
 
@@ -121,5 +121,17 @@ describe("buildQuery", () => {
       "?page=0&size=25&sort=amount%2Casc",
     );
     expect(buildQuery({})).toBe("");
+  });
+});
+
+describe("apiBase", () => {
+  it("is same-origin when no API origin is configured", () => {
+    expect(apiBase(undefined)).toBe("/api/v1");
+    expect(apiBase("")).toBe("/api/v1");
+  });
+
+  it("prefixes a configured API origin and drops trailing slashes", () => {
+    expect(apiBase("https://api.example.com")).toBe("https://api.example.com/api/v1");
+    expect(apiBase(" https://api.example.com/ ")).toBe("https://api.example.com/api/v1");
   });
 });

@@ -1,7 +1,15 @@
 import { tokens } from "./tokens";
 import type { LoginResponse, Problem } from "./types";
 
-export const API_BASE = "/api/v1";
+/**
+ * Origin of the API. Empty (same origin, proxied by nginx / the Vite dev server) unless the SPA is hosted
+ * separately from the backend, in which case VITE_API_URL is baked in at build time.
+ */
+export function apiBase(origin: string | undefined): string {
+  return `${(origin ?? "").trim().replace(/\/+$/, "")}/api/v1`;
+}
+
+export const API_BASE = apiBase(import.meta.env.VITE_API_URL);
 
 export class ApiError extends Error {
   readonly status: number;
